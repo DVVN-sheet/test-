@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>రిజిస్ట్రేషన్ ఫారం</title>
+  <style>
+    body { font-family: Arial; background: #f9f9f9; margin: 0; padding: 40px; }
+    .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; }
+    input, button { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+    button { background-color: #4CAF50; color: white; border: none; }
+    button:hover { background-color: #45a049; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>రిజిస్టర్ అవ్వండి</h2>
+    <form name="submit-to-google-sheet">
+      <input name="name" type="text" placeholder="మీ పేరు" required />
+      <input name="email" type="email" placeholder="మీ ఇమెయిల్" required />
+      <input name="phone" type="tel" placeholder="మీ ఫోన్ నంబర్" />
+      <button type="submit">సబ్మిట్</button>
+    </form>
+    <p id="msg"></p>
+  </div>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzEkAlAeAPJ8OiYZmF_Xf6fpYxX0KKoA8d7a5PUv1kkKpGRA265YEBXCa9TfZxcbnYP/exec';
+    const form = document.forms['submit-to-google-sheet'];
+    const msg = document.getElementById("msg");
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => {
+          msg.innerHTML = "రిజిస్ట్రేషన్ విజయవంతం!";
+          form.reset();
+        })
+        .catch(error => {
+          msg.innerHTML = "ఏదో తప్పు జరిగింది.";
+          console.error('Error!', error.message);
+        });
+    });
+  </script>
+</body>
+</html>
